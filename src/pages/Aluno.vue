@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <q-page class="flex flex-center">
     <h1>Aluno</h1>
-  </div>
+    <app-table />
+  </q-page>
 </template>
 
 <script>
+import myTable from "../components/Table.vue";
 export default {
-    name: 'Aluno'
-}
+  components: { "app-table": myTable },
+  name: "Aluno",
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

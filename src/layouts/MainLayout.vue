@@ -64,8 +64,14 @@ const linksList = [
   {
     title: "Modulos",
     caption: "quasar.dev",
-    icon: "school",
+    icon: "book",
     name: "Modulos",
+  },
+  {
+    title: "Sair",
+    caption: "quasar.dev",
+    icon: "exit_to_app",
+    name: "Login",
   },
 ];
 
