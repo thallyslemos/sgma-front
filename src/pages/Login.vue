@@ -1,5 +1,7 @@
 <template>
-  <div class="q-pa-md row items-start q-gutter-md bg-primary">
+  <q-page
+    class="felx flex-center q-pa-md row items-start q-gutter-md bg-primary"
+  >
     <q-card class="loginCard">
       <img src="../assets/logo.png" ratio="1" width="200px" />
       <h3>SGMA</h3>
@@ -40,7 +42,7 @@
         <div class="absolute-bottom text-subtitle2 text-center">Title</div>
       </q-img>
     </q-card>
-  </div>
+  </q-page>
 </template>
 
 <script>
@@ -64,7 +66,7 @@ export default {
   flex-direction: column;
   width: 300px;
   height: auto;
-  margin: 10vh auto;
+  margin: 5vh auto;
   align-items: center;
   padding: 1em 0;
 }
