@@ -1,7 +1,5 @@
 <template>
-  <q-page
-    class="felx flex-center q-pa-md row items-start q-gutter-md bg-primary"
-  >
+  <q-page class="felx flex-center bg-primary">
     <q-card class="loginCard">
       <img src="../assets/logo.png" ratio="1" width="200px" />
       <h3>SGMA</h3>
@@ -36,12 +34,6 @@
         />
       </q-card-actions>
     </q-card>
-
-    <q-card class="my-card">
-      <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
-        <div class="absolute-bottom text-subtitle2 text-center">Title</div>
-      </q-img>
-    </q-card>
   </q-page>
 </template>
 
@@ -62,11 +54,12 @@ export default {
 
 <style scoped>
 .loginCard {
+  align-self: center;
   display: flex;
   flex-direction: column;
   width: 300px;
   height: auto;
-  margin: 5vh auto;
+  margin: auto;
   align-items: center;
   padding: 1em 0;
 }
