@@ -53,25 +53,47 @@
               </q-card>
             </q-dialog>
 
-            <q-dialog v-model="prompt" persistent>
-              <q-card style="min-width: 350px">
-                <q-card-section>
-                  <div class="text-h6">Your address</div>
-                </q-card-section>
+            <q-dialog v-model="prompt" persistent full-height>
+              <q-card style="min-width: 350px; max-height: 80vh">
+                <q-form @submit.prevent="salvar">
+                  <q-card-section>
+                    <div class="text-h6">Cadastrar Aluno</div>
+                  </q-card-section>
 
-                <q-card-section class="q-pt-none">
-                  <q-input
-                    dense
-                    v-model="address"
-                    autofocus
-                    @keyup.enter="prompt = false"
-                  />
-                </q-card-section>
+                  <q-card-section class="q-pt-none">
+                    <q-input
+                      dense
+                      v-model="novoAluno.nome"
+                      autofocus
+                      label="Nome"
+                      @keyup.enter="prompt = false"
+                    />
+                  </q-card-section>
+                  <q-card-section class="q-pt-none">
+                    <q-input
+                      dense
+                      v-model="novoAluno.cpf"
+                      autofocus
+                      label="CPF"
+                      @keyup.enter="prompt = false"
+                    />
+                  </q-card-section>
+                  <q-card-section class="q-pt-none">
+                    <q-input
+                      disable
+                      type="date"
+                      dense
+                      v-model="novoAluno.data_nascimento"
+                      autofocus
+                      @keyup.enter="prompt = false"
+                    />
+                  </q-card-section>
 
-                <q-card-actions align="right" class="text-primary">
-                  <q-btn flat label="Cancel" v-close-popup />
-                  <q-btn flat label="Add address" v-close-popup />
-                </q-card-actions>
+                  <q-card-actions align="right" class="text-primary">
+                    <q-btn flat label="Cancelar" v-close-popup />
+                    <q-btn flat label="Cadastrar Aluno" type="submit" />
+                  </q-card-actions>
+                </q-form>
               </q-card>
             </q-dialog>
           </div>
@@ -109,12 +131,24 @@ export default {
   },
   // components: { "app-table": myTable },
   name: "Aluno",
+  methods: {
+    salvar() {
+      // let isoDate = new Date(this.novoAluno.data_nascimento).toISOString();
+      // this.novoAluno.data_nascimento = isoDate;
+      // console.log(isoDate);
+      // console.log(parseObj);
+      let parseObj = JSON.stringify(this.novoAluno);
+
+      alunos.salvar(parseObj).then((res) => {
+        this.alert("Cadastro Realizado!");
+      });
+    },
+  },
   setup() {
     return {
       alert: ref(false),
       confirm: ref(false),
       prompt: ref(false),
-      address: ref(""),
     };
   },
   data() {
@@ -154,6 +188,11 @@ export default {
       ],
       alunos: [],
       select: [],
+      novoAluno: {
+        nome: "",
+        cpf: "",
+        data_nascimento: "",
+      },
     };
   },
 };
