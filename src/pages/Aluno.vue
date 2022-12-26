@@ -5,21 +5,20 @@
         <div class="row"></div>
         <div class="q-mt-md">
           <div class="q-pa-md q-gutter-sm">
-            <q-btn label="Modulos" color="primary" @click="alert = true" />
-            <q-btn label="Deletar" color="negative" @click="confirm = true" />
-            <q-btn label="Cadastrar" color="positive" @click="prompt = true" />
-            <q-btn label="Editar" color="secondary" @click="prompt = true" />
-            <q-input type="text" label="Pesquisar" color="primary" />
-
+            <q-btn
+              label="Cadastrar"
+              color="positive"
+              @click="cadastroForm = true"
+            />
             <q-dialog v-model="alert">
               <q-card>
                 <q-card-section>
-                  <div class="text-h6">Alert</div>
+                  <div class="text-h6">Modulos</div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
                   <h4>Modulos</h4>
-                  {{ JSON.stringify(select[0]) }}
+                  {{ JSON.stringify(selected.modules) }}
                 </q-card-section>
 
                 <q-card-actions align="right">
@@ -28,34 +27,71 @@
               </q-card>
             </q-dialog>
 
-            <q-dialog v-model="confirm" persistent>
+            <q-dialog v-model="confirmDelete" persistent>
               <q-card>
-                <q-card-section class="row items-center">
-                  <q-avatar
-                    icon="signal_wifi_off"
-                    color="primary"
-                    text-color="white"
-                  />
+                <q-card-section>
                   <span class="q-ml-sm"
-                    >You are currently not connected to any network.</span
-                  >
+                    >Tem certeza que deseja excluir os dados do Aluno:
+                    {{ selected.nome }}
+                  </span>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                  <q-btn flat label="Cancel" color="primary" v-close-popup />
+                  <q-btn flat label="Cancelar" color="primary" v-close-popup />
                   <q-btn
                     flat
-                    label="Turn on Wifi"
+                    label="Sim"
                     color="primary"
+                    @click="deleteAluno()"
                     v-close-popup
                   />
                 </q-card-actions>
               </q-card>
             </q-dialog>
 
-            <q-dialog v-model="prompt" persistent full-height>
+            <q-dialog v-model="editForm" persistent full-height>
               <q-card style="min-width: 350px; max-height: 80vh">
-                <q-form @submit.prevent="salvar">
+                <q-form @submit.prevent="editarAluno">
+                  <q-card-section>
+                    <div class="text-h6">Editar Cadastro</div>
+                  </q-card-section>
+
+                  <q-card-section class="q-pt-none">
+                    <q-input
+                      dense
+                      v-model="selected.nome"
+                      autofocus
+                      label="Nome"
+                    />
+                  </q-card-section>
+                  <q-card-section class="q-pt-none">
+                    <q-input
+                      dense
+                      v-model="selected.cpf"
+                      autofocus
+                      label="CPF"
+                    />
+                  </q-card-section>
+                  <q-card-section class="q-pt-none">
+                    <q-input
+                      disable
+                      type="date"
+                      dense
+                      v-model="selected.data_nascimento"
+                      autofocus
+                    />
+                  </q-card-section>
+
+                  <q-card-actions align="right" class="text-primary">
+                    <q-btn flat label="Cancelar" v-close-popup />
+                    <q-btn flat label="Salvar Alterações" type="submit" />
+                  </q-card-actions>
+                </q-form>
+              </q-card>
+            </q-dialog>
+            <q-dialog v-model="cadastroForm" persistent full-height>
+              <q-card style="min-width: 350px; max-height: 80vh">
+                <q-form @submit.prevent="cadastrarAluno">
                   <q-card-section>
                     <div class="text-h6">Cadastrar Aluno</div>
                   </q-card-section>
@@ -66,7 +102,6 @@
                       v-model="novoAluno.nome"
                       autofocus
                       label="Nome"
-                      @keyup.enter="prompt = false"
                     />
                   </q-card-section>
                   <q-card-section class="q-pt-none">
@@ -75,17 +110,14 @@
                       v-model="novoAluno.cpf"
                       autofocus
                       label="CPF"
-                      @keyup.enter="prompt = false"
                     />
                   </q-card-section>
                   <q-card-section class="q-pt-none">
                     <q-input
-                      disable
                       type="date"
                       dense
                       v-model="novoAluno.data_nascimento"
                       autofocus
-                      @keyup.enter="prompt = false"
                     />
                   </q-card-section>
 
@@ -98,19 +130,57 @@
             </q-dialog>
           </div>
         </div>
-        <q-layout class="row">
+        <div class="q-pa-md">
           <q-table
-            title="Alunos"
-            :data="alunos"
+            title="Gerenciamento de Alunos"
+            :data="alunosData"
             :columns="columns"
-            row-key="nome"
-            class="col"
-            separator="cell"
-            selection="single"
-            :selected.sync="select"
-          />
-        </q-layout>
-        <div class="row"></div>
+            row-key="name"
+            :filter="filter"
+          >
+            <template v-slot:top-right>
+              <q-input
+                dense
+                debounce="300"
+                v-model="filter"
+                placeholder="Search"
+              >
+                <template v-slot:append>
+                  <q-icon name="search" />
+                </template>
+              </q-input>
+            </template>
+            <template v-slot:body-cell-acoes="props">
+              <q-td :props="props">
+                <div>
+                  <q-btn
+                    icon="delete"
+                    color="negative"
+                    size="sm"
+                    dense
+                    class="q-ml-sm"
+                    @click="(confirmDelete = true), (selected = props.row)"
+                  />
+                  <q-btn
+                    icon="edit"
+                    color="primary"
+                    size="sm"
+                    dense
+                    class="q-ml-sm"
+                    @click="(editForm = true), (selected = props.row)"
+                  />
+                  <q-btn
+                    icon="book"
+                    color="secondary"
+                    size="sm"
+                    dense
+                    class="q-ml-sm"
+                  />
+                </div>
+              </q-td>
+            </template>
+          </q-table>
+        </div>
       </div>
     </div>
   </q-page>
@@ -120,45 +190,63 @@
 import myTable from "../components/Table.vue";
 import alunos from "src/services/alunos";
 import { ref } from "vue";
+import { runInThisContext } from "vm";
 // import axios from "axios";
 
 export default {
   mounted() {
     alunos.listar().then((res) => {
-      this.alunos = res.data;
-      console.log(res.data);
+      this.alunosData = res.data;
     });
   },
+
+  // updated() {
+  //   alunos.listar().then((res) => {
+  //     this.alunosData = res.data;
+  //   });
+  // },
   // components: { "app-table": myTable },
   name: "Aluno",
   methods: {
-    salvar() {
-      // let isoDate = new Date(this.novoAluno.data_nascimento).toISOString();
-      // this.novoAluno.data_nascimento = isoDate;
+    cadastrarAluno() {
+      let isoDate = new Date(this.novoAluno.data_nascimento).toISOString();
+      this.novoAluno.data_nascimento = isoDate;
       // console.log(isoDate);
       // console.log(parseObj);
       let parseObj = JSON.stringify(this.novoAluno);
 
-      alunos.salvar(parseObj).then((res) => {
-        this.alert("Cadastro Realizado!");
+      alunos.salvar(this.novoAluno).then((res) => {
+        alert("Cadastro Realizado!");
       });
+      this.cadastroForm = false;
+      this.novoAluno = "";
+    },
+    deleteAluno() {
+      alunos.deletar(this.selected.cpf).then((res) => {
+        console.log(this.selected.nome + "Deletado!");
+      });
+    },
+    editarAluno() {
+      console.log("Aluno Editado " + this.selected.nome);
     },
   },
   setup() {
     return {
       alert: ref(false),
-      confirm: ref(false),
-      prompt: ref(false),
+      confirmDelete: ref(false),
+      editForm: ref(false),
+      cadastroForm: ref(false),
     };
   },
   data() {
     return {
+      filter: "",
       columns: [
         {
           name: "nome",
           label: "Nome do Aluno",
-          field: "nome",
           align: "left",
+          field: (row) => row.nome,
           format: (val) => `${val}`,
           sortable: true,
         },
@@ -181,17 +269,17 @@ export default {
         {
           name: "acoes",
           label: "Ações",
-          align: "left",
+          align: "right",
           format: (val) => `${val}`,
           sortable: true,
         },
       ],
-      alunos: [],
-      select: [],
+      selected: "",
+      alunosData: [],
       novoAluno: {
         nome: "",
         cpf: "",
-        data_nascimento: "",
+        data_nascimento: null,
       },
     };
   },
