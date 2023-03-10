@@ -1,8 +1,5 @@
 <template>
-  <q-layout
-    style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
-    class="flex flex-center"
-  >
+  <q-page id="loginView" class="flex flex-center">
     <q-card class="my-card">
       <q-card-section class="q-pt-none">
         <img src="" />
@@ -10,36 +7,49 @@
       </q-card-section>
 
       <q-card-section class="q-gutter-md">
-        <q-input filled v-model="user" label="Login" />
-        <q-input type="password" filled v-model="password" label="Senha" />
+        <q-input filled v-model="credentials.user" label="Login" />
+        <q-input
+          type="password"
+          filled
+          v-model="credentials.password"
+          label="Senha"
+        />
       </q-card-section>
-      <q-card-action class="q-pa-md">
+      <q-card-actions class="q-pa-md">
         <q-btn color="primary" label="Entrar" @click="login"></q-btn>
-      </q-card-action>
+      </q-card-actions>
     </q-card>
-  </q-layout>
+  </q-page>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { api } from "boot/axios";
+import { useAuthStore } from "../stores/auth-store";
+import { useRoute, useRouter } from "vue-router";
 
-const user = ref("");
-const password = ref("");
-const http = api;
+const credentials = ref({
+  user: "",
+  password: "",
+});
 
-async function login() {
-  let credentials = {
-    username: `${user.value}`,
-    password: `${password.value}`,
-  };
-  console.log(credentials);
-  let auth = await http.post("users/login", credentials);
-  console.log(auth);
-  (user.value = ""), (password.value = "");
+const auth = useAuthStore();
+const router = useRouter();
 
-  return auth;
-}
+const login = async () => {
+  try {
+    let pass = await auth.login(
+      credentials.value.user,
+      credentials.value.password
+    );
+
+    router.push({ path: "/home" });
+  } catch (error) {
+    alert(error.message);
+  }
+
+  (credentials.value.user = ""), (credentials.value.value = "");
+};
 </script>
 
 <style>
@@ -47,5 +57,8 @@ async function login() {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+#loginView {
+  background: radial-gradient(circle, #35a2ff 0%, #014a88 100%);
 }
 </style>
