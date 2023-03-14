@@ -19,40 +19,14 @@
       class="bg-grey-3"
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
-        <q-list padding>
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="inbox" />
-            </q-item-section>
+        <q-list>
+          <q-item-label header> Menu </q-item-label>
 
-            <q-item-section> Inbox </q-item-section>
-          </q-item>
-
-          <q-item active clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="star" />
-            </q-item-section>
-
-            <q-item-section> Star </q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="send" />
-            </q-item-section>
-
-            <q-item-section> Send </q-item-section>
-          </q-item>
-
-          <q-separator />
-
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="drafts" />
-            </q-item-section>
-
-            <q-item-section> Drafts </q-item-section>
-          </q-item>
+          <EssentialLink
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+          />
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -65,16 +39,31 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import EssentialLink from "components/EssentialLink.vue";
+
+const linksList = [
+  {
+    title: "Home",
+    icon: "home",
+    route: "home",
+  },
+  {
+    title: "Alunos",
+    icon: "school",
+    route: "alunos",
+  },
+];
 
 export default defineComponent({
   name: "MainLayout",
 
-  components: {},
+  components: { EssentialLink },
 
   setup() {
     const leftDrawerOpen = ref(false);
 
     return {
+      essentialLinks: linksList,
       drawer: ref(false),
       miniState: ref(true),
       leftDrawerOpen,
