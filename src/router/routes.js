@@ -6,14 +6,39 @@ const routes = [
   {
     path: "/login",
     component: () => import("layouts/CommonLayout.vue"),
-    children: [{ path: "", component: () => import("pages/LoginPage.vue") }],
+    children: [
+      {
+        path: "",
+        name: "login",
+        component: () => import("pages/LoginPage.vue"),
+      },
+    ],
   },
   {
     path: "/home",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/IndexPage.vue") },
-      { path: "/alunos", component: () => import("pages/StudentsPage.vue") },
+      {
+        path: "",
+        name: "home",
+        component: () => import("pages/IndexPage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/alunos",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "alunos",
+        component: () => import("pages/StudentsPage.vue"),
+      },
+      {
+        path: "/formStudent/:id?",
+        name: "formStudent",
+        component: () => import("pages/FormStudent.vue"),
+      },
     ],
   },
   // {

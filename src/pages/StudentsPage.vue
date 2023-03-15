@@ -1,14 +1,29 @@
 <template>
   <q-page padding>
     Students
-    <q-table title="Treats" :rows="alunos" :columns="columns" row-key="name">
+    <q-table title="Alunos" :rows="alunos" :columns="columns" row-key="name">
+      <template v-slot:top>
+        <span class="text=h5">Alunos</span>
+        <q-space />
+        <q-btn
+          color="primary"
+          label="Cadastrar Aluno"
+          :to="{ name: 'formStudent' }"
+        />
+      </template>
       <template v-slot:body-cell-actions="props">
-        <q-td :props="props">
+        <q-td :props="props" class="q-gutter-sm">
           <q-btn
             icon="delete"
             color="negative"
             dense
             @click="handleDeleteStudent(props.row.id)"
+          />
+          <q-btn
+            icon="edit"
+            color="info"
+            dense
+            @click="handleEditStudent(props.row.id)"
           />
         </q-td>
       </template>
@@ -20,6 +35,7 @@
 import { defineComponent, onMounted, ref } from "vue";
 import studentsService from "src/services/studenst";
 import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "StudentsPage",
@@ -72,6 +88,7 @@ export default defineComponent({
     };
 
     const $q = useQuasar();
+    const router = useRouter();
 
     const handleDeleteStudent = async (id) => {
       try {
@@ -91,10 +108,15 @@ export default defineComponent({
       }
     };
 
+    const handleEditStudent = async (id) => {
+      router.push({ name: "formStudent", params: { id } });
+    };
+
     return {
       alunos,
       columns,
       handleDeleteStudent,
+      handleEditStudent,
     };
   },
 });

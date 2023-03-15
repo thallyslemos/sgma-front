@@ -10,6 +10,15 @@ export default function useApi(url) {
     }
   };
 
+  const getById = async (id) => {
+    try {
+      const { data } = await api.get(`${url}/${id}`);
+      return data;
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
   const post = async (form) => {
     try {
       const { data } = await api.post(url, form);
@@ -21,7 +30,13 @@ export default function useApi(url) {
 
   const update = async (form) => {
     try {
-      const { data } = await api.update(`${url}/${form.id}`, form);
+      const { name, cpf, brth_date } = form;
+      console.log(form, { name, cpf, brth_date });
+      const { data } = await api.patch(`${url}/${form.id}`, {
+        name,
+        cpf,
+        brth_date,
+      });
       return data;
     } catch (e) {
       throw new Error(e);
@@ -42,5 +57,6 @@ export default function useApi(url) {
     post,
     update,
     remove,
+    getById,
   };
 }
