@@ -49,69 +49,60 @@
   </q-page>
 </template>
 
-<script>
+<script setup>
 import { useQuasar } from "quasar";
 import studentsService from "src/services/studenst";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-export default defineComponent({
-  name: "FormStudent",
-  setup() {
-    const form = ref({
-      name: "",
-      cpf: "",
-      birth_date: "",
-    });
-    const { post, getById, update } = studentsService();
-    const $q = useQuasar();
-    const router = useRouter();
-    const route = useRoute();
-
-    onMounted(async () => {
-      if (route.params.id) {
-        getStudent(route.params.id);
-      }
-    });
-
-    const getStudent = async (id) => {
-      try {
-        const response = await getById(route.params.id);
-        form.value = response;
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    const onSubmit = async () => {
-      try {
-        if (form.value.id) {
-          console.log(form.value);
-          await update(form.value);
-        } else {
-          form.value.birth_date = new Date(form.value.birth_date).toISOString();
-          await post(form.value);
-        }
-
-        $q.notify({
-          message: "Aluno cadastrado com sucesso!",
-          icon: "check",
-          color: "positive",
-        });
-
-        router.push({ name: "alunos" });
-      } catch (e) {
-        console.log(e);
-        $q.notify({ message: e.message, icon: "warming", color: "negative" });
-      }
-    };
-
-    return {
-      form,
-      onSubmit,
-    };
-  },
+const form = ref({
+  name: "",
+  cpf: "",
+  birth_date: "",
 });
+const { post, getById, update } = studentsService();
+const $q = useQuasar();
+const router = useRouter();
+const route = useRoute();
+
+onMounted(async () => {
+  if (route.params.id) {
+    getStudent(route.params.id);
+  }
+});
+
+const getStudent = async (id) => {
+  try {
+    const response = await getById(route.params.id);
+    form.value = response;
+    form.value.birth_date = form.value.birth_date.substring(0, 10);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const onSubmit = async () => {
+  try {
+    if (form.value.id) {
+      console.log(form.value);
+      await update(form.value);
+    } else {
+      form.value.birth_date = new Date(form.value.birth_date).toISOString();
+      await post(form.value);
+    }
+
+    $q.notify({
+      message: "Aluno cadastrado com sucesso!",
+      icon: "check",
+      color: "positive",
+    });
+
+    router.push({ name: "alunos" });
+  } catch (e) {
+    console.log(e);
+    $q.notify({ message: e.message, icon: "warming", color: "negative" });
+  }
+};
 </script>
 
 <style></style>
