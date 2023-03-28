@@ -52,6 +52,11 @@ const linksList = [
     icon: "school",
     route: "alunos",
   },
+  {
+    title: "Cursos",
+    icon: "book",
+    route: "cursos",
+  },
 ];
 
 export default defineComponent({

@@ -41,6 +41,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/cursos",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "cursos",
+        component: () => import("pages/CoursesPage.vue"),
+      },
+    ],
+  },
   // {
   //   path: "/alunos",
   //   component: () => import("layouts/MainLayout.vue"),
