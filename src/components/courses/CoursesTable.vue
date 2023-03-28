@@ -30,6 +30,13 @@ const columns = [
     sortable: true,
     align: "left",
   },
+  {
+    name: "actions",
+    label: "Ações",
+    field: "actions",
+    sortable: true,
+    align: "left",
+  },
 ];
 const rows = ref([""]);
 const createRoute = "formStudent";
