@@ -11,7 +11,7 @@
       virtual-scroll
     >
       <template v-slot:top-left>
-        <q-input dense debounce="300" v-model="filter" placeholder="Search">
+        <q-input dense debounce="300" v-model="filter" placeholder="Pesquisar">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -19,11 +19,7 @@
       </template>
       <template v-slot:top-right>
         <q-space />
-        <q-btn
-          color="primary"
-          label="Cadastrar Aluno"
-          @click="handleCreate()"
-        />
+        <q-btn color="primary" label="Cadastrar" @click="handleCreate()" />
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" class="q-gutter-sm">

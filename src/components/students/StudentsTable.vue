@@ -53,8 +53,8 @@ const columns = [
   },
 ];
 const rows = ref([""]);
-const createRoute = "formStudent";
-const editRoute = "formStudent";
+const createRoute = "alunos/cadastro";
+const editRoute = "alunos/cadastro";
 
 onMounted(() => {
   getAlunos();
