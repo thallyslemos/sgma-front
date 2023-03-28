@@ -35,8 +35,8 @@ const routes = [
         component: () => import("pages/StudentsPage.vue"),
       },
       {
-        path: "/formStudent/:id?",
-        name: "formStudent",
+        path: "/alunos/cadastro/:id?",
+        name: "cadastro",
         component: () => import("pages/FormStudent.vue"),
       },
     ],
@@ -49,6 +49,11 @@ const routes = [
         path: "",
         name: "cursos",
         component: () => import("pages/CoursesPage.vue"),
+      },
+      {
+        path: "/cursos/cadastro/:id?",
+        name: "cursos/cadastro",
+        component: () => import("pages/FormCourse.vue"),
       },
     ],
   },
