@@ -31,7 +31,6 @@ export default function useApi(url) {
   const update = async (form) => {
     try {
       const { name, cpf, brth_date } = form;
-      console.log(form, { name, cpf, brth_date });
       const { data } = await api.patch(`${url}/${form.id}`, {
         name,
         cpf,

@@ -24,16 +24,25 @@
       <template v-slot:body-cell-actions="props">
         <q-td :props="props" class="q-gutter-sm">
           <q-btn
+            v-if="deleteBtn"
             icon="delete"
             color="negative"
             dense
             @click="handleDelete(props.row.id)"
           />
           <q-btn
+            v-if="editBtn"
             icon="edit"
-            color="info"
+            color="warning"
             dense
             @click="handleEdit(props.row.id)"
+          />
+          <q-btn
+            v-if="infoBtn"
+            icon="info"
+            color="secondary"
+            dense
+            @click="handleInfo(props.row.id)"
           />
         </q-td>
       </template>
@@ -53,6 +62,18 @@ const router = useRouter();
 const props = defineProps({
   handleDelete: Function,
   show: {
+    type: Boolean,
+    default: true,
+  },
+  deleteBtn: {
+    type: Boolean,
+    default: true,
+  },
+  editBtn: {
+    type: Boolean,
+    default: true,
+  },
+  infoBtn: {
     type: Boolean,
     default: true,
   },
@@ -76,14 +97,22 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  infoRoute: {
+    type: String,
+    default: "",
+  },
 });
 
-const handleEdit = async (id) => {
+const handleEdit = (id) => {
   const updateRoute = `${props.editRoute}`;
-  await router.push(`${updateRoute}/${id}`);
+  router.push(`${updateRoute}/${id}`);
 };
-const handleCreate = async () => {
+const handleCreate = () => {
   const createRoute = `${props.createRoute}`;
-  await router.push(createRoute);
+  router.push(createRoute);
+};
+const handleInfo = (id) => {
+  const infoRoute = `${props.infoRoute}/${id}`;
+  router.push(infoRoute);
 };
 </script>

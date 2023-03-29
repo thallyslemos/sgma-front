@@ -39,6 +39,11 @@ const routes = [
         name: "cadastro",
         component: () => import("pages/FormStudent.vue"),
       },
+      {
+        path: "/alunos/matriculas/:id?",
+        name: "alunoCursos",
+        component: () => import("pages/StudentCoursesPaage.vue"),
+      },
     ],
   },
   {

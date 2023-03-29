@@ -7,6 +7,7 @@
       :rows="rows"
       :create-route="createRoute"
       :edit-route="editRoute"
+      :info-route="infoRoute"
       :handle-delete="confirmDelete"
     />
   </q-page>
@@ -55,6 +56,7 @@ const columns = [
 const rows = ref([""]);
 const createRoute = "alunos/cadastro";
 const editRoute = "alunos/cadastro";
+const infoRoute = "alunos/matriculas";
 
 onMounted(() => {
   getAlunos();

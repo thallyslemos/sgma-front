@@ -1,33 +1,60 @@
 <template>
   <q-page padding>
-    <h5>Cursos</h5>
+    <h5>Alunos</h5>
     <my-table
-      title="Cursos"
+      title="Alunos"
       :columns="columns"
       :rows="rows"
       :create-route="createRoute"
       :edit-route="editRoute"
       :handle-delete="confirmDelete"
-      :delete-btn="false"
     />
   </q-page>
 </template>
 <script setup>
 import { useQuasar } from "quasar";
 import MyTable from "src/components/MyTable.vue";
-import coursesService from "src/services/courses";
+import regisrationsService from "src/services/registrations";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
-const { list, remove } = coursesService();
+const { list, remove, getById } = regisrationsService();
 const $q = useQuasar();
 const route = useRoute();
 
 const columns = [
   {
     name: "name",
-    label: "Nome",
+    label: "Curso",
     field: "name",
+    sortable: true,
+    align: "left",
+  },
+  {
+    name: "grade_1",
+    label: "Nota 1",
+    field: "grade_1",
+    sortable: true,
+    align: "left",
+  },
+  {
+    name: "grade_2",
+    label: "Nota 2",
+    field: "grade_2",
+    sortable: true,
+    align: "left",
+  },
+  {
+    name: "grade_3",
+    label: "Nota 3",
+    field: "grade_3",
+    sortable: true,
+    align: "left",
+  },
+  {
+    name: "birth_date",
+    label: "Situação",
+    field: "birth_date",
     sortable: true,
     align: "left",
   },
@@ -40,20 +67,20 @@ const columns = [
   },
 ];
 const rows = ref([""]);
-const createRoute = "cursos/cadastro";
-const editRoute = "cursos/cadastro";
+const createRoute = "alunos/cadastro";
+const editRoute = "alunos/cadastro";
 
 onMounted(() => {
-  getAlunos();
+  getRegistrations();
 });
 
-const getAlunos = async () => {
+const getRegistrations = async () => {
   try {
-    const data = await list();
-    rows.value = data;
-    rows.value.map((data) => {
-      data.birth_date = data.birth_date.substring(0, 10);
+    const data = await getById("08cab0f0-1a82-4cd7-bee2-62e298f1a0f9");
+    data.map((data) => {
+      Object.defineProperty(data, "name", { value: data.course.name });
     });
+    rows.value = data;
   } catch (e) {
     console.log(e);
   }
