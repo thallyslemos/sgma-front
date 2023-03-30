@@ -1,5 +1,4 @@
 <template>
-  Cursos
   <student-courses-table />
 </template>
 <script setup>

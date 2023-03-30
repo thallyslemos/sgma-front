@@ -5,11 +5,16 @@ export default function regisrationsService() {
     "/students/registrations"
   );
 
+  const getOneById = useApi("/students/register").getById;
+  const postGrades = useApi("/students/register").post;
+
   return {
     list,
     post,
     update,
     remove,
     getById,
+    getOneById,
+    postGrades,
   };
 }

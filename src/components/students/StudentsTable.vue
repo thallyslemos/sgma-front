@@ -1,6 +1,5 @@
 <template>
   <q-page padding>
-    <h5>Alunos</h5>
     <my-table
       title="Alunos"
       :columns="columns"
@@ -9,6 +8,7 @@
       :edit-route="editRoute"
       :info-route="infoRoute"
       :handle-delete="confirmDelete"
+      :return-btn="false"
     />
   </q-page>
 </template>

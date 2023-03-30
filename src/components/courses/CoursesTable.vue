@@ -1,6 +1,5 @@
 <template>
   <q-page padding>
-    <h5>Cursos</h5>
     <my-table
       title="Cursos"
       :columns="columns"
@@ -9,6 +8,7 @@
       :edit-route="editRoute"
       :handle-delete="confirmDelete"
       :delete-btn="false"
+      :return-btn="false"
     />
   </q-page>
 </template>
@@ -51,9 +51,6 @@ const getAlunos = async () => {
   try {
     const data = await list();
     rows.value = data;
-    rows.value.map((data) => {
-      data.birth_date = data.birth_date.substring(0, 10);
-    });
   } catch (e) {
     console.log(e);
   }

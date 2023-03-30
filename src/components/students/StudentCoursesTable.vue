@@ -1,8 +1,7 @@
 <template>
   <q-page padding>
-    <h5>Alunos</h5>
     <my-table
-      title="Alunos"
+      title="Boletim"
       :columns="columns"
       :rows="rows"
       :create-route="createRoute"
@@ -67,16 +66,16 @@ const columns = [
   },
 ];
 const rows = ref([""]);
-const createRoute = "alunos/cadastro";
-const editRoute = "alunos/cadastro";
+const createRoute = "/alunos/matriculas/editar";
+const editRoute = "/alunos/matriculas/editar";
 
 onMounted(() => {
-  getRegistrations();
+  getRegistrations(route.params.id);
 });
 
-const getRegistrations = async () => {
+const getRegistrations = async (id) => {
   try {
-    const data = await getById("08cab0f0-1a82-4cd7-bee2-62e298f1a0f9");
+    const data = await getById(id);
     data.map((data) => {
       Object.defineProperty(data, "name", { value: data.course.name });
     });

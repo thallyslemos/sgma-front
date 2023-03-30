@@ -44,6 +44,11 @@ const routes = [
         name: "alunoCursos",
         component: () => import("pages/StudentCoursesPaage.vue"),
       },
+      {
+        path: "/alunos/matriculas/editar/:id?",
+        name: "editarMatricula",
+        component: () => import("pages/FormGrades.vue"),
+      },
     ],
   },
   {

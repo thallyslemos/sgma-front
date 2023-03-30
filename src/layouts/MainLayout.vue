@@ -45,17 +45,17 @@ const linksList = [
   {
     title: "Home",
     icon: "home",
-    route: "home",
+    route: "/home",
   },
   {
     title: "Alunos",
     icon: "school",
-    route: "alunos",
+    route: "/alunos",
   },
   {
     title: "Cursos",
     icon: "book",
-    route: "cursos",
+    route: "/cursos",
   },
 ];
 

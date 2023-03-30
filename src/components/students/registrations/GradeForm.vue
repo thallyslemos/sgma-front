@@ -1,34 +1,31 @@
 <template>
   <q-page padding>
     <q-form @submit="onSubmit" class="row q-col-gutter-sm">
-      <h6>{{ title }}</h6>
       <q-input
         filled
         class="col-lg-6 col-xs-12"
-        v-model="form.name"
-        label="Nome do aluno"
-        hint="Nome completo"
+        v-model="form.grade_1"
+        label="Nota 1"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
       <q-input
         filled
         class="col-lg-6 col-xs-12"
-        v-model="form.cpf"
-        label="CPF do aluno"
-        hint="Apenas números"
+        v-model="form.grade_2"
+        label="Nota 2"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
       <q-input
-        type="date"
         filled
         class="col-lg-6 col-xs-12"
-        v-model="form.birth_date"
-        hint="Data de nascimento"
+        v-model="form.grade_3"
+        label="Nota 3"
         lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
+
       <div class="col-12 q-gutter-sm">
         <q-btn
           label="Cadastrar"
@@ -52,52 +49,47 @@
 
 <script setup>
 import { useQuasar } from "quasar";
-import studentsService from "src/services/studenst";
+import regisrationsService from "src/services/registrations";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const form = ref({
-  name: "",
-  cpf: "",
-  birth_date: "",
+  grade_1: "",
+  grade_2: "",
+  grade_3: "",
 });
-const { post, getById, update } = studentsService();
+const { postGrades, update, getOneById } = regisrationsService();
 const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
 
-const title = ref("");
-
 onMounted(async () => {
   if (route.params.id) {
-    getStudent(route.params.id);
-    title.value = "Editar Daados do aluno";
-  } else {
-    title.value = "Cadastrar aluno";
+    getRegisters(route.params.id);
   }
 });
 
-const getStudent = async (id) => {
+const getRegisters = async (id) => {
   try {
-    const response = await getById(route.params.id);
+    const response = await getOneById(route.params.id);
     form.value = response;
-    form.value.birth_date = form.value.birth_date.substring(0, 10);
+    console.log(form.value);
   } catch (e) {
     console.error(e);
   }
 };
-
+// Refatorar manipulação das notas
 const onSubmit = async () => {
   try {
     if (form.value.id) {
+      console.log(form.value);
       await update(form.value);
     } else {
-      form.value.birth_date = new Date(form.value.birth_date).toISOString();
-      await post(form.value);
+      await postGrades(form.value);
     }
 
     $q.notify({
-      message: "Aluno cadastrado com sucesso!",
+      message: "Curso cadastrado com sucesso!",
       icon: "check",
       color: "positive",
     });
