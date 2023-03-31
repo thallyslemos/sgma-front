@@ -61,7 +61,7 @@ const form = ref({
   cpf: "",
   birth_date: "",
 });
-const { post, getById, update } = studentsService();
+const { post, getById, updateStudent } = studentsService();
 const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
@@ -89,10 +89,10 @@ const getStudent = async (id) => {
 
 const onSubmit = async () => {
   try {
+    form.value.birth_date = new Date(form.value.birth_date).toISOString();
     if (form.value.id) {
-      await update(form.value);
+      await updateStudent(form.value);
     } else {
-      form.value.birth_date = new Date(form.value.birth_date).toISOString();
       await post(form.value);
     }
 

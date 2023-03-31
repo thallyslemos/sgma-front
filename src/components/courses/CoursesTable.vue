@@ -70,17 +70,10 @@ const confirmDelete = (id) => {
       label: "Cancelar",
     },
     ersistent: true,
-  })
-    .onOk(() => {
-      console.log("confirm");
-      handleDelete(id);
-    })
-    .onCancel(() => {
-      console.log("cancel");
-    })
-    .onDismiss(() => {
-      console.log("dismis?");
-    });
+  }).onOk(() => {
+    console.log("confirm");
+    handleDelete(id);
+  });
 };
 
 const handleDelete = async (id) => {

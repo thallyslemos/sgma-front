@@ -28,13 +28,27 @@ export default function useApi(url) {
     }
   };
 
-  const update = async (form) => {
+  const updateStudent = async (form) => {
     try {
-      const { name, cpf, brth_date } = form;
+      const { name, cpf, birth_date } = form;
       const { data } = await api.patch(`${url}/${form.id}`, {
         name,
         cpf,
-        brth_date,
+        birth_date,
+      });
+      return data;
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
+  const updateRegistration = async (form) => {
+    try {
+      const { grade_1, grade_2, grade_3 } = form;
+      const { data } = await api.patch(`${url}/${form.id}`, {
+        grade_1: parseFloat(grade_1),
+        grade_2: parseFloat(grade_2),
+        grade_3: parseFloat(grade_2),
       });
       return data;
     } catch (e) {
@@ -54,7 +68,8 @@ export default function useApi(url) {
   return {
     list,
     post,
-    update,
+    updateStudent,
+    updateRegistration,
     remove,
     getById,
   };

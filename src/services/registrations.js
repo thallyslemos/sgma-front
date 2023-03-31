@@ -1,7 +1,7 @@
 import useApi from "src/composables/UseApi";
 
 export default function regisrationsService() {
-  const { list, post, update, remove, getById } = useApi(
+  const { list, post, updateRegistration, remove, getById } = useApi(
     "/students/registrations"
   );
 
@@ -11,7 +11,7 @@ export default function regisrationsService() {
   return {
     list,
     post,
-    update,
+    updateRegistration,
     remove,
     getById,
     getOneById,

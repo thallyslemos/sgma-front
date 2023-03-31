@@ -2,28 +2,28 @@
   <q-page padding>
     <q-form @submit="onSubmit" class="row q-col-gutter-sm">
       <q-input
+        type="number"
         filled
         class="col-lg-6 col-xs-12"
         v-model="form.grade_1"
         label="Nota 1"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
       <q-input
+        type="number"
         filled
         class="col-lg-6 col-xs-12"
         v-model="form.grade_2"
         label="Nota 2"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
       <q-input
+        type="number"
         filled
         class="col-lg-6 col-xs-12"
         v-model="form.grade_3"
         label="Nota 3"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
       />
 
       <div class="col-12 q-gutter-sm">
@@ -54,11 +54,11 @@ import { defineComponent, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const form = ref({
-  grade_1: "",
-  grade_2: "",
-  grade_3: "",
+  grade_1: null,
+  grade_2: null,
+  grade_3: null,
 });
-const { postGrades, update, getOneById } = regisrationsService();
+const { postGrades, updateRegistration, getOneById } = regisrationsService();
 const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
@@ -73,7 +73,6 @@ const getRegisters = async (id) => {
   try {
     const response = await getOneById(route.params.id);
     form.value = response;
-    console.log(form.value);
   } catch (e) {
     console.error(e);
   }
@@ -82,7 +81,7 @@ const getRegisters = async (id) => {
 const onSubmit = async () => {
   try {
     if (form.value.id) {
-      await update(form.value);
+      await updateRegistration(form.value);
     } else {
       await postGrades(form.value);
     }
