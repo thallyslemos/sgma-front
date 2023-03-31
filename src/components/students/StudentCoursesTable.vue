@@ -51,9 +51,9 @@ const columns = [
     align: "left",
   },
   {
-    name: "birth_date",
+    name: "status",
     label: "Situação",
-    field: "birth_date",
+    field: "status",
     sortable: true,
     align: "left",
   },
@@ -78,12 +78,30 @@ const getRegistrations = async (id) => {
     const data = await getById(id);
     data.map((data) => {
       Object.defineProperty(data, "name", { value: data.course.name });
+
+      Object.defineProperty(data, "status", {
+        value: getStatus(data.grade_1, data.grade_2, data.grade_3),
+      });
     });
     rows.value = data;
   } catch (e) {
     console.log(e);
   }
 };
+
+const getStatus = (grade_1, grade_2, grade_3) => {
+  if (!(grade_1 && grade_2 && grade_3)) {
+    return "Incompleto";
+  } else {
+    const averge = (grade_1 + grade_2 + grade_3) / 3;
+    if (averge < 5) {
+      return "Inapto";
+    } else {
+      return "Apto";
+    }
+  }
+};
+
 const confirmDelete = (id) => {
   $q.dialog({
     title: "Confirmar Exclusão?",
@@ -99,17 +117,9 @@ const confirmDelete = (id) => {
       label: "Cancelar",
     },
     ersistent: true,
-  })
-    .onOk(() => {
-      console.log("confirm");
-      handleDelete(id);
-    })
-    .onCancel(() => {
-      console.log("cancel");
-    })
-    .onDismiss(() => {
-      console.log("dismis?");
-    });
+  }).onOk(() => {
+    handleDelete(id);
+  });
 };
 
 const handleDelete = async (id) => {

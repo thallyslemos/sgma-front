@@ -82,7 +82,6 @@ const getRegisters = async (id) => {
 const onSubmit = async () => {
   try {
     if (form.value.id) {
-      console.log(form.value);
       await update(form.value);
     } else {
       await postGrades(form.value);
