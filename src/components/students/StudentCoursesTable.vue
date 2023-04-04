@@ -7,6 +7,7 @@
       :create-route="createRoute"
       :edit-route="editRoute"
       :handle-delete="confirmDelete"
+      :info-btn="false"
     />
   </q-page>
 </template>
@@ -17,7 +18,7 @@ import regisrationsService from "src/services/registrations";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
-const { list, remove, getById } = regisrationsService();
+const { remove, getById } = regisrationsService();
 const $q = useQuasar();
 const route = useRoute();
 
@@ -126,10 +127,9 @@ const confirmDelete = (id) => {
 const handleDelete = async (id) => {
   try {
     await remove(id);
-    const data = await list();
-    rows.value = data;
+    await getRegistrations(route.params.id);
     $q.notify({
-      message: "Aluno excluido com sucesso!",
+      message: "Registro excluido com sucesso!",
       icon: "check",
       color: "positive",
     });

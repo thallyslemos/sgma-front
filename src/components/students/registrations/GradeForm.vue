@@ -2,6 +2,7 @@
   <q-page padding>
     <q-form @submit="onSubmit" class="row q-col-gutter-sm">
       <q-select
+        v-if="isCreate"
         class="col-lg-6 col-xs-12"
         filled
         :options="coursesOptions"
@@ -69,15 +70,7 @@ const form = ref({
   grade_3: null,
 });
 
-// const map = new Map();
-
-// map.set("e54ffef2-2e99-4cd4-ae4c-121e2d483bb4", "NestJs");
-// map.set("dde37e3d-e344-4da6-88b3-ad7f392d543d", "VueJs");
-// const cursos = Array.from(map, (e) => {
-//   return e[1];
-// });
-// console.log(cursos);
-
+const isCreate = ref(true);
 const coursesOptions = ref([""]);
 const getCourses = async () => {
   try {
@@ -101,9 +94,9 @@ const route = useRoute();
 
 onMounted(async () => {
   form.value.id_student = localStorage.studentId;
-  console.log(route.params);
   if (route.params.id) {
     getRegisters(route.params.id);
+    isCreate.value = false;
   } else {
     getCourses();
   }
@@ -127,7 +120,7 @@ const onSubmit = async () => {
     }
 
     $q.notify({
-      message: "Curso cadastrado com sucesso!",
+      message: "Registro atualizado com sucesso!",
       icon: "check",
       color: "positive",
     });
