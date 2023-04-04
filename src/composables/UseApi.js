@@ -28,6 +28,22 @@ export default function useApi(url) {
     }
   };
 
+  const postRegistration = async (form) => {
+    try {
+      const { id_course, id_student, grade_1, grade_2, grade_3 } = form;
+      const { data } = await api.post(url, {
+        id_course: id_course.value,
+        id_student,
+        grade_1: parseFloat(grade_1),
+        grade_2: parseFloat(grade_2),
+        grade_3: parseFloat(grade_3),
+      });
+      return data;
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
   const updateStudent = async (form) => {
     try {
       const { name, cpf, birth_date } = form;
@@ -48,7 +64,7 @@ export default function useApi(url) {
       const { data } = await api.patch(`${url}/${form.id}`, {
         grade_1: parseFloat(grade_1),
         grade_2: parseFloat(grade_2),
-        grade_3: parseFloat(grade_2),
+        grade_3: parseFloat(grade_3),
       });
       return data;
     } catch (e) {
@@ -68,6 +84,7 @@ export default function useApi(url) {
   return {
     list,
     post,
+    postRegistration,
     updateStudent,
     updateRegistration,
     remove,

@@ -71,6 +71,7 @@ const editRoute = "/alunos/matriculas/editar";
 
 onMounted(() => {
   getRegistrations(route.params.id);
+  localStorage.studentId = route.params.id;
 });
 
 const getRegistrations = async (id) => {

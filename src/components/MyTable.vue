@@ -76,13 +76,11 @@
 </template>
 
 <script setup>
-import { useQuasar } from "quasar";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const filter = ref("");
 const separator = ref("cell");
-const $q = useQuasar();
 const router = useRouter();
 const props = defineProps({
   handleDelete: Function,
