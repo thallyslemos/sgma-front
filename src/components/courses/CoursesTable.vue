@@ -9,6 +9,7 @@
       :handle-delete="confirmDelete"
       :delete-btn="false"
       :return-btn="false"
+      :info-btn="false"
     />
   </q-page>
 </template>
@@ -32,6 +33,13 @@ const columns = [
     align: "left",
   },
   {
+    name: "students",
+    label: "Alunos Matriculados",
+    field: "students",
+    sortable: true,
+    align: "left",
+  },
+  {
     name: "actions",
     label: "Ações",
     field: "actions",
@@ -50,6 +58,13 @@ onMounted(() => {
 const getAlunos = async () => {
   try {
     const data = await list();
+    data.map((data) => {
+      Object.defineProperty(data, "students", {
+        value: data._count.coursesStudents,
+      });
+    });
+    console.log(data);
+
     rows.value = data;
   } catch (e) {
     console.log(e);
