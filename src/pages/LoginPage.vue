@@ -1,24 +1,30 @@
 <template>
   <q-page id="loginView" class="flex flex-center">
-    <q-card class="my-card">
-      <q-card-section class="q-pt-none">
-        <img src="" />
-        <h1>SGMA</h1>
-      </q-card-section>
+    <transition
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <q-card class="my-card">
+        <q-card-section class="q-pt-none">
+          <img src="" />
+          <h1>SGMA</h1>
+        </q-card-section>
 
-      <q-card-section class="q-gutter-md">
-        <q-input filled v-model="credentials.user" label="Login" />
-        <q-input
-          type="password"
-          filled
-          v-model="credentials.password"
-          label="Senha"
-        />
-      </q-card-section>
-      <q-card-actions class="q-pa-md">
-        <q-btn color="primary" label="Entrar" @click="login"></q-btn>
-      </q-card-actions>
-    </q-card>
+        <q-card-section class="q-gutter-md">
+          <q-input filled v-model="credentials.user" label="Login" />
+          <q-input
+            type="password"
+            filled
+            v-model="credentials.password"
+            label="Senha"
+          />
+        </q-card-section>
+        <q-card-actions class="q-pa-md">
+          <q-btn color="primary" label="Entrar" @click="login"></q-btn>
+        </q-card-actions>
+      </q-card>
+    </transition>
   </q-page>
 </template>
 

@@ -1,57 +1,63 @@
 <template>
   <q-page padding>
-    <q-form @submit="onSubmit" class="row q-col-gutter-sm">
-      <q-select
-        v-if="isCreate"
-        class="col-lg-6 col-xs-12"
-        filled
-        :options="coursesOptions"
-        v-model="form.id_course"
-        label="Curso"
-      />
-      <q-input
-        type="number"
-        filled
-        class="col-lg-6 col-xs-12"
-        v-model="form.grade_1"
-        label="Nota 1"
-        lazy-rules
-      />
-      <q-input
-        type="number"
-        filled
-        class="col-lg-6 col-xs-12"
-        v-model="form.grade_2"
-        label="Nota 2"
-        lazy-rules
-      />
-      <q-input
-        type="number"
-        filled
-        class="col-lg-6 col-xs-12"
-        v-model="form.grade_3"
-        label="Nota 3"
-        lazy-rules
-      />
+    <transition
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <q-form @submit="onSubmit" class="row q-col-gutter-sm">
+        <q-select
+          v-if="isCreate"
+          class="col-lg-6 col-xs-12"
+          filled
+          :options="coursesOptions"
+          v-model="form.id_course"
+          label="Curso"
+        />
+        <q-input
+          type="number"
+          filled
+          class="col-lg-6 col-xs-12"
+          v-model="form.grade_1"
+          label="Nota 1"
+          lazy-rules
+        />
+        <q-input
+          type="number"
+          filled
+          class="col-lg-6 col-xs-12"
+          v-model="form.grade_2"
+          label="Nota 2"
+          lazy-rules
+        />
+        <q-input
+          type="number"
+          filled
+          class="col-lg-6 col-xs-12"
+          v-model="form.grade_3"
+          label="Nota 3"
+          lazy-rules
+        />
 
-      <div class="col-12 q-gutter-sm">
-        <q-btn
-          label="Cadastrar"
-          color="primary"
-          class="float-right"
-          icon="save"
-          type="submit"
-        />
-        <q-btn
-          label="Cancelar"
-          color="white"
-          text-color="dark"
-          class="float-right"
-          icon="cancel"
-          @click="$router.go(-1)"
-        />
-      </div>
-    </q-form>
+        <div class="col-12 q-gutter-sm">
+          <q-btn
+            label="Cadastrar"
+            color="primary"
+            class="float-right"
+            icon="save"
+            type="submit"
+          />
+          <q-btn
+            label="Cancelar"
+            color="white"
+            text-color="dark"
+            class="float-right"
+            icon="cancel"
+            @click="$router.go(-1)"
+          />
+        </div>
+      </q-form>
+    </transition>
   </q-page>
 </template>
 

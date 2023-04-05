@@ -1,35 +1,41 @@
 <template>
-  <q-page padding>
-    <q-form @submit="onSubmit" class="row q-col-gutter-sm">
-      <h6>{{ title }}</h6>
-      <q-input
-        filled
-        class="col-lg-6 col-xs-12"
-        v-model="form.name"
-        label="Nome do Curso"
-        hint="O curso deve ter um nome exclusivo"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Please type something']"
-      />
+  <q-page padding
+    ><transition
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <q-form @submit="onSubmit" class="row q-col-gutter-sm">
+        <h6>{{ title }}</h6>
+        <q-input
+          filled
+          class="col-lg-6 col-xs-12"
+          v-model="form.name"
+          label="Nome do Curso"
+          hint="O curso deve ter um nome exclusivo"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+        />
 
-      <div class="col-12 q-gutter-sm">
-        <q-btn
-          label="Cadastrar"
-          color="primary"
-          class="float-right"
-          icon="save"
-          type="submit"
-        />
-        <q-btn
-          label="Cancelar"
-          color="white"
-          text-color="dark"
-          class="float-right"
-          icon="cancel"
-          @click="$router.go(-1)"
-        />
-      </div>
-    </q-form>
+        <div class="col-12 q-gutter-sm">
+          <q-btn
+            label="Cadastrar"
+            color="primary"
+            class="float-right"
+            icon="save"
+            type="submit"
+          />
+          <q-btn
+            label="Cancelar"
+            color="white"
+            text-color="dark"
+            class="float-right"
+            icon="cancel"
+            @click="$router.go(-1)"
+          />
+        </div>
+      </q-form>
+    </transition>
   </q-page>
 </template>
 
