@@ -34,7 +34,9 @@ const columns = [
   {
     name: "students",
     label: "Alunos Matriculados",
-    field: "students",
+    field: (row) => {
+      return row._count.coursesStudents;
+    },
     sortable: true,
     align: "left",
   },
@@ -57,11 +59,6 @@ onMounted(() => {
 const getAlunos = async () => {
   try {
     const data = await list();
-    data.map((data) => {
-      Object.defineProperty(data, "students", {
-        value: data._count.coursesStudents,
-      });
-    });
 
     rows.value = data;
   } catch (e) {
@@ -84,7 +81,6 @@ const confirmDelete = (id) => {
     },
     ersistent: true,
   }).onOk(() => {
-    console.log("confirm");
     handleDelete(id);
   });
 };
@@ -93,11 +89,7 @@ const handleDelete = async (id) => {
   try {
     await remove(id);
     const data = await list();
-    data.map((data) => {
-      Object.defineProperty(data, "students", {
-        value: data._count.coursesStudents,
-      });
-    });
+
     rows.value = data;
     $q.notify({
       message: "Aluno excluido com sucesso!",

@@ -26,35 +26,56 @@ const columns = [
   {
     name: "name",
     label: "Curso",
-    field: "name",
+    field: (row) => {
+      return row.course.name;
+    },
     sortable: true,
     align: "left",
   },
   {
     name: "grade_1",
     label: "Nota 1",
-    field: "grade_1",
+    field: (row) => {
+      return row.grade_1;
+    },
     sortable: true,
     align: "left",
   },
   {
     name: "grade_2",
     label: "Nota 2",
-    field: "grade_2",
+    field: (row) => {
+      return row.grade_2;
+    },
     sortable: true,
     align: "left",
   },
   {
     name: "grade_3",
     label: "Nota 3",
-    field: "grade_3",
+    field: (row) => {
+      return row.grade_3;
+    },
     sortable: true,
     align: "left",
   },
   {
     name: "status",
     label: "Situação",
-    field: "status",
+    field: (row) => {
+      let status;
+      if (!(row.grade_1 && row.grade_2 && row.grade_3)) {
+        status = "Incompleto";
+      } else {
+        let averge = (row.grade_1 + row.grade_2 + row.grade_3) / 3;
+        if (averge < 5) {
+          status = "Inapto";
+        } else {
+          status = "Apto";
+        }
+      }
+      return status;
+    },
     sortable: true,
     align: "left",
   },
@@ -78,29 +99,10 @@ onMounted(() => {
 const getRegistrations = async (id) => {
   try {
     const data = await getById(id);
-    data.map((data) => {
-      Object.defineProperty(data, "name", { value: data.course.name });
 
-      Object.defineProperty(data, "status", {
-        value: getStatus(data.grade_1, data.grade_2, data.grade_3),
-      });
-    });
     rows.value = data;
   } catch (e) {
     console.log(e);
-  }
-};
-
-const getStatus = (grade_1, grade_2, grade_3) => {
-  if (!(grade_1 && grade_2 && grade_3)) {
-    return "Incompleto";
-  } else {
-    const averge = (grade_1 + grade_2 + grade_3) / 3;
-    if (averge < 5) {
-      return "Inapto";
-    } else {
-      return "Apto";
-    }
   }
 };
 
