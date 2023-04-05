@@ -7,7 +7,6 @@
       :create-route="createRoute"
       :edit-route="editRoute"
       :handle-delete="confirmDelete"
-      :delete-btn="false"
       :return-btn="false"
       :info-btn="false"
     />
@@ -63,7 +62,6 @@ const getAlunos = async () => {
         value: data._count.coursesStudents,
       });
     });
-    console.log(data);
 
     rows.value = data;
   } catch (e) {
@@ -95,6 +93,11 @@ const handleDelete = async (id) => {
   try {
     await remove(id);
     const data = await list();
+    data.map((data) => {
+      Object.defineProperty(data, "students", {
+        value: data._count.coursesStudents,
+      });
+    });
     rows.value = data;
     $q.notify({
       message: "Aluno excluido com sucesso!",
