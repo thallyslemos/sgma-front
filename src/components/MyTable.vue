@@ -42,21 +42,27 @@
                 color="negative"
                 dense
                 @click="handleDelete(props.row.id)"
-              />
+              >
+                <q-tooltip> Deletar </q-tooltip>
+              </q-btn>
               <q-btn
                 v-if="editBtn"
                 icon="edit"
                 color="warning"
                 dense
                 @click="handleEdit(props.row.id)"
-              />
+              >
+                <q-tooltip> Editar </q-tooltip>
+              </q-btn>
               <q-btn
                 v-if="infoBtn"
                 icon="info"
                 color="secondary"
                 dense
                 @click="handleInfo(props.row.id)"
-              />
+              >
+                <q-tooltip> Módulos </q-tooltip>
+              </q-btn>
             </q-td>
           </template>
         </q-table>
