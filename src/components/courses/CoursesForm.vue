@@ -1,6 +1,7 @@
 <template>
   <q-page padding>
     <q-form @submit="onSubmit" class="row q-col-gutter-sm">
+      <h6>{{ title }}</h6>
       <q-input
         filled
         class="col-lg-6 col-xs-12"
@@ -38,6 +39,7 @@ import coursesService from "src/services/courses";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
+const title = ref("Cadastrar Curso");
 const form = ref({
   name: "",
 });
@@ -49,6 +51,7 @@ const route = useRoute();
 onMounted(async () => {
   if (route.params.id) {
     getCourse(route.params.id);
+    title.value = "Editar Curso";
   }
 });
 

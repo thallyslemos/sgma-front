@@ -66,14 +66,12 @@ const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
 
-const title = ref("");
+const title = ref("Cadastrar aluno");
 
 onMounted(async () => {
   if (route.params.id) {
     getStudent(route.params.id);
-    title.value = "Editar Daados do aluno";
-  } else {
-    title.value = "Cadastrar aluno";
+    title.value = "Editar Daados do Aluno";
   }
 });
 
