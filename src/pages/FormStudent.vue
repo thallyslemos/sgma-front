@@ -14,7 +14,9 @@
           label="Nome do aluno"
           hint="Nome completo"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[
+            (val) => (val && val.length > 2) || 'Digite o nome do aluno',
+          ]"
         />
         <q-input
           filled
@@ -23,7 +25,10 @@
           label="CPF do aluno"
           hint="Apenas números"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          mask="###.###.###-##"
+          :rules="[
+            (val) => (val && val.length > 13) || 'Digite o CPF do aluno',
+          ]"
         />
         <q-input
           type="date"
@@ -32,7 +37,10 @@
           v-model="form.birth_date"
           hint="Data de nascimento"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[
+            (val) =>
+              (val && val.length > 0) || 'Digite a data de nascimento do aluno',
+          ]"
         />
         <div class="col-12 q-gutter-sm">
           <q-btn

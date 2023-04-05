@@ -14,7 +14,9 @@
           label="Nome do Curso"
           hint="O curso deve ter um nome exclusivo"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[
+            (val) => (val && val.length > 3) || 'Digite um nome válido.',
+          ]"
         />
 
         <div class="col-12 q-gutter-sm">

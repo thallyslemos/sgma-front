@@ -13,6 +13,8 @@
           :options="coursesOptions"
           v-model="form.id_course"
           label="Curso"
+          lazy-rules
+          :rules="[(val) => val || 'Selecione um curso']"
         />
         <q-input
           type="number"
