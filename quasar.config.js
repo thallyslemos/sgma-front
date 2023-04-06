@@ -47,8 +47,8 @@ module.exports = configure(function (ctx) {
       vueRouterMode: "history", // available values: 'hash', 'history'
       env: {
         API: ctx.dev
-          ? "https://sgma-api.herokuapp.com/"
-          : "http://localhost:3000/",
+          ? "http://localhost:3000/"
+          : "https://sgma-api.herokuapp.com/",
       },
 
       // transpile: false,
@@ -102,7 +102,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Notify", "Dialog"],
+      plugins: ["Notify", "Dialog", "Loading"],
     },
 
     // animations: 'all', // --- includes all animations

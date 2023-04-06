@@ -9,6 +9,7 @@
       :info-route="infoRoute"
       :handle-delete="confirmDelete"
       :return-btn="false"
+      :show="!isLoading"
     />
   </q-page>
 </template>
@@ -53,6 +54,7 @@ const columns = [
     align: "left",
   },
 ];
+const isLoading = ref(true);
 const rows = ref([""]);
 const createRoute = "alunos/cadastro";
 const editRoute = "alunos/cadastro";
@@ -63,13 +65,19 @@ onMounted(() => {
 });
 
 const getAlunos = async () => {
+  $q.loading.show({
+    message: "Buscando informações no servidor...",
+  });
   try {
     const data = await list();
     rows.value = data;
     rows.value.map((data) => {
       data.birth_date = data.birth_date.substring(0, 10);
     });
+    isLoading.value = false;
+    $q.loading.hide();
   } catch (e) {
+    $q.loading.hide();
     console.log(e);
   }
 };

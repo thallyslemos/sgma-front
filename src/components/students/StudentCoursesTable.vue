@@ -8,6 +8,7 @@
       :edit-route="editRoute"
       :handle-delete="confirmDelete"
       :info-btn="false"
+      :show="!isLoading"
     />
   </q-page>
 </template>
@@ -87,6 +88,7 @@ const columns = [
     align: "left",
   },
 ];
+const isLoading = ref(true);
 const rows = ref([""]);
 const createRoute = "/alunos/matriculas/editar";
 const editRoute = "/alunos/matriculas/editar";
@@ -97,11 +99,19 @@ onMounted(() => {
 });
 
 const getRegistrations = async (id) => {
+  $q.loading.show({
+    message: "Buscando informações no servidor...",
+  });
+
   try {
     const data = await getById(id);
 
     rows.value = data;
+    isLoading.value = false;
+    $q.loading.hide();
   } catch (e) {
+    isLoading.value = false;
+    $q.loading.hide();
     console.log(e);
   }
 };

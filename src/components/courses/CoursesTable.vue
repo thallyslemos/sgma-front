@@ -9,6 +9,7 @@
       :handle-delete="confirmDelete"
       :return-btn="false"
       :info-btn="false"
+      :show="!isLoading"
     />
   </q-page>
 </template>
@@ -21,7 +22,6 @@ import { useRoute } from "vue-router";
 
 const { list, remove } = coursesService();
 const $q = useQuasar();
-const route = useRoute();
 
 const columns = [
   {
@@ -48,6 +48,8 @@ const columns = [
     align: "left",
   },
 ];
+
+const isLoading = ref(true);
 const rows = ref([""]);
 const createRoute = "cursos/cadastro";
 const editRoute = "cursos/cadastro";
@@ -57,12 +59,18 @@ onMounted(() => {
 });
 
 const getAlunos = async () => {
+  $q.loading.show({
+    message: "Buscando informações no servidor...",
+  });
   try {
     const data = await list();
 
     rows.value = data;
+    isLoading.value = false;
+    $q.loading.hide();
   } catch (e) {
     console.log(e);
+    $q.loading.hide();
   }
 };
 const confirmDelete = (id) => {

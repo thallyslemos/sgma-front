@@ -4,6 +4,7 @@
       <q-toolbar>
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>SGMA</q-toolbar-title>
+        <q-btn flat @click="router.push('/login')" round dense icon="logout" />
       </q-toolbar>
     </q-header>
 
@@ -40,6 +41,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
+import { useRouter } from "vue-router";
 
 const linksList = [
   {
@@ -66,8 +68,10 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const router = useRouter();
 
     return {
+      router,
       essentialLinks: linksList,
       drawer: ref(false),
       miniState: ref(true),
