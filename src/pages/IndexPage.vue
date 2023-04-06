@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="row justify-center">
         <div class="column q-pa-md items-center text-blue-grey text-bold">
-          <h4>Sistem de Gestão de Módulos Acadêmicos</h4>
+          <h4>Sistema de Gestão de Módulos Acadêmicos</h4>
           <p>
             Gerencie os registros de seus e alunos e acompanhe seu desempenho
             com o SGMA!
