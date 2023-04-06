@@ -46,7 +46,9 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: "history", // available values: 'hash', 'history'
       env: {
-        API: ctx.dev ? "http://localhost:3000/" : "http://localhost:3000/",
+        API: ctx.dev
+          ? "http://localhost:3000/"
+          : "https://sgma-api.herokuapp.com/",
       },
 
       // transpile: false,

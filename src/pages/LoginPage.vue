@@ -11,14 +11,22 @@
           <h1>SGMA</h1>
         </q-card-section>
 
-        <q-card-section class="q-gutter-md">
-          <q-input filled v-model="credentials.user" label="Login" />
+        <q-card-section class="q-gutter-sm">
+          <q-input dense v-model="credentials.user" label="Login" />
           <q-input
-            type="password"
-            filled
+            :type="isPwd ? 'password' : 'text'"
+            dense
             v-model="credentials.password"
             label="Senha"
-          />
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
         </q-card-section>
         <q-card-actions class="q-pa-md">
           <q-btn color="primary" label="Entrar" @click="login"></q-btn>
@@ -38,6 +46,7 @@ const credentials = ref({
   user: "",
   password: "",
 });
+const isPwd = ref(true);
 
 const auth = useAuthStore();
 const router = useRouter();

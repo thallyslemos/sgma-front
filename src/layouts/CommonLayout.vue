@@ -2,8 +2,9 @@
   <q-layout view="lHh Lpr lFf" class="shadow-2 rounded-borders">
     <q-header elevated class="bg-primary">
       <q-toolbar>
-        <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-        <q-toolbar-title>SGMA</q-toolbar-title>
+        <q-toolbar-title
+          >Sistema de Gestão de Módulos Avaliativos</q-toolbar-title
+        >
       </q-toolbar>
     </q-header>
     <q-page-container>
