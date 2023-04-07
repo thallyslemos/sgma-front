@@ -22,7 +22,6 @@
                 (val && val.length > 3) || 'Digite um nome de usuário válido',
             ]"
           >
-            >
             <template v-slot:append>
               <q-icon name="person" />
             </template>
@@ -37,7 +36,6 @@
               (val) => (val && val.length > 3) || 'Digite uma senha válida',
             ]"
           >
-            >
             <template v-slot:append>
               <q-icon
                 :name="isPwd ? 'visibility_off' : 'visibility'"
@@ -57,16 +55,16 @@
 
 <script setup>
 import { ref } from "vue";
-import { api } from "boot/axios";
 import { useAuthStore } from "../stores/auth-store";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
 const credentials = ref({
   user: "",
   password: "",
 });
 const isPwd = ref(true);
-
+const $q = useQuasar();
 const auth = useAuthStore();
 const router = useRouter();
 
@@ -78,11 +76,11 @@ const login = async () => {
     );
 
     router.push({ path: "/home" });
-  } catch (error) {
-    alert(error.message);
+  } catch (e) {
+    $q.notify({ message: e.message, icon: "warming", color: "negative" });
   }
 
-  (credentials.value.user = ""), (credentials.value.value = "");
+  (credentials.value.user = ""), (credentials.value.password = "");
 };
 </script>
 
