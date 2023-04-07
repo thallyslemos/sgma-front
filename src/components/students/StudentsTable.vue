@@ -11,6 +11,7 @@
       :return-btn="false"
       :show="!isLoading"
     />
+    <conection-error :show="conectError" />
   </q-page>
 </template>
 <script setup>
@@ -19,11 +20,11 @@ import MyTable from "src/components/MyTable.vue";
 import studentsService from "src/services/studenst";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import ConectionError from "../common/ConectionError.vue";
 
 const { list, remove } = studentsService();
 const $q = useQuasar();
-const route = useRoute();
-
+const conectError = ref(false);
 const columns = [
   {
     name: "name",
@@ -42,7 +43,9 @@ const columns = [
   {
     name: "birth_date",
     label: "Data de Nascimento",
-    field: "birth_date",
+    field: (row) => {
+      return row.birth_date.substring(0, 10).split("-").reverse().join("/");
+    },
     sortable: true,
     align: "left",
   },
@@ -71,14 +74,13 @@ const getAlunos = async () => {
   try {
     const data = await list();
     rows.value = data;
-    rows.value.map((data) => {
-      data.birth_date = data.birth_date.substring(0, 10);
-    });
+
     isLoading.value = false;
     $q.loading.hide();
   } catch (e) {
     $q.loading.hide();
     console.log(e);
+    conectError.value = true;
   }
 };
 const confirmDelete = (id) => {

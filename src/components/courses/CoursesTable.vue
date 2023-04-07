@@ -11,6 +11,7 @@
       :info-btn="false"
       :show="!isLoading"
     />
+    <conection-error :show="conectError" />
   </q-page>
 </template>
 <script setup>
@@ -19,6 +20,7 @@ import MyTable from "src/components/MyTable.vue";
 import coursesService from "src/services/courses";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import ConectionError from "../common/ConectionError.vue";
 
 const { list, remove } = coursesService();
 const $q = useQuasar();
@@ -48,8 +50,9 @@ const columns = [
     align: "left",
   },
 ];
-
+ConectionError;
 const isLoading = ref(true);
+const conectError = ref(false);
 const rows = ref([""]);
 const createRoute = "cursos/cadastro";
 const editRoute = "cursos/cadastro";
@@ -71,6 +74,7 @@ const getAlunos = async () => {
   } catch (e) {
     console.log(e);
     $q.loading.hide();
+    conectError.value = true;
   }
 };
 const confirmDelete = (id) => {

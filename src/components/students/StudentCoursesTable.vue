@@ -10,6 +10,7 @@
       :info-btn="false"
       :show="!isLoading"
     />
+    <conection-error :show="conectError" />
   </q-page>
 </template>
 <script setup>
@@ -18,6 +19,7 @@ import MyTable from "src/components/MyTable.vue";
 import regisrationsService from "src/services/registrations";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import ConectionError from "../common/ConectionError.vue";
 
 const { remove, getById } = regisrationsService();
 const $q = useQuasar();
@@ -88,6 +90,7 @@ const columns = [
     align: "left",
   },
 ];
+const conectError = ref(false);
 const isLoading = ref(true);
 const rows = ref([""]);
 const createRoute = "/alunos/matriculas/editar";
@@ -112,6 +115,7 @@ const getRegistrations = async (id) => {
   } catch (e) {
     isLoading.value = false;
     $q.loading.hide();
+    conectError.value = true;
     console.log(e);
   }
 };
