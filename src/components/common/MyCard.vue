@@ -4,7 +4,7 @@
     enter-active-class="animated fadeIn"
     leave-active-class="animated fadeOut"
   >
-    <div class="q-pa-md" v-if="show">
+    <div class="row justify-center q-pa-md al" v-if="show">
       <q-card
         id="card"
         class="q-ma-md bg-blue-grey shadow-10"
