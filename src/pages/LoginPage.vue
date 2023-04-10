@@ -77,7 +77,7 @@ const login = async () => {
 
     router.push({ path: "/home" });
   } catch (e) {
-    $q.notify({ message: e.message, icon: "warming", color: "negative" });
+    $q.notify({ message: e.message, icon: "warning", color: "negative" });
   }
 
   (credentials.value.user = ""), (credentials.value.password = "");

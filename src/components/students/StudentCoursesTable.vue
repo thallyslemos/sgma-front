@@ -150,7 +150,7 @@ const handleDelete = async (id) => {
       color: "positive",
     });
   } catch (e) {
-    $q.notify({ message: e.message, icon: "warming", color: "negative" });
+    $q.notify({ message: e.message, icon: "warning", color: "negative" });
   }
 };
 </script>

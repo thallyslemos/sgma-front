@@ -136,7 +136,7 @@ const onSubmit = async () => {
     router.go(-1);
   } catch (e) {
     console.log(e);
-    $q.notify({ message: e.message, icon: "warming", color: "negative" });
+    $q.notify({ message: e.message, icon: "warning", color: "negative" });
   }
 };
 </script>
