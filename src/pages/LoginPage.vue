@@ -14,7 +14,7 @@
         <q-card-section class="q-gutter-sm">
           <q-input
             dense
-            v-model="credentials.user"
+            v-model="credentials.username"
             label="Login"
             lazy-rules
             :rules="[
@@ -58,9 +58,10 @@ import { ref } from "vue";
 import { useAuthStore } from "../stores/auth-store";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import { api } from "src/boot/axios";
 
 const credentials = ref({
-  user: "",
+  username: "",
   password: "",
 });
 const isPwd = ref(true);
@@ -70,10 +71,13 @@ const router = useRouter();
 
 const login = async () => {
   try {
-    let pass = await auth.login(
-      credentials.value.user,
-      credentials.value.password
-    );
+    const { data } = await api.post("auth/login", credentials.value);
+    auth.setToken(data.access_token);
+    auth.setUser(data.user);
+    // let pass = await auth.login(
+    //   credentials.value.user,
+    //   credentials.value.password
+    // );
 
     router.push({ path: "/home" });
   } catch (e) {
