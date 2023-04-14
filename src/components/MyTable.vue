@@ -72,7 +72,7 @@
                 </q-btn>
                 <q-btn
                   v-if="infoBtn"
-                  icon="info"
+                  icon="collections_bookmark"
                   color="secondary"
                   dense
                   @click="handleInfo(props.row.id)"
