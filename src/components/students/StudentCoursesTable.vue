@@ -17,7 +17,7 @@
 import { useQuasar } from "quasar";
 import MyTable from "src/components/MyTable.vue";
 import regisrationsService from "src/services/registrations";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import ConectionError from "../common/ConectionError.vue";
 
@@ -98,7 +98,11 @@ const editRoute = "/alunos/matriculas/editar";
 
 onMounted(() => {
   getRegistrations(route.params.id);
-  localStorage.studentId = route.params.id;
+  sessionStorage.studentId = route.params.id;
+});
+
+onUnmounted(() => {
+  sessionStorage.removeItem("studentId");
 });
 
 const getRegistrations = async (id) => {
