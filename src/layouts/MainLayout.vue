@@ -4,7 +4,29 @@
       <q-toolbar>
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>SGMA</q-toolbar-title>
-        <q-btn flat @click="router.push('/login')" round dense icon="logout" />
+        <q-btn flat round dense icon="person">
+          <q-menu>
+            <q-list dense style="min-width: 100px">
+              <q-item-label header>Usuário: {{ userName }}</q-item-label>
+              <q-item clickable v-close-popup>
+                <q-item-section @click="router.push('/login')">
+                  Sair</q-item-section
+                >
+                <q-item-section avatar>
+                  <q-icon color="primary" name="logout" />
+                </q-item-section>
+              </q-item>
+
+              <q-separator />
+              <q-item clickable v-close-popup>
+                <q-item-section>Opções...</q-item-section>
+                <q-item-section avatar>
+                  <q-icon color="primary" name="settings" />
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -39,9 +61,10 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import { useRouter } from "vue-router";
+import { SessionStorage } from "quasar";
 
 const linksList = [
   {
@@ -69,12 +92,20 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
     const router = useRouter();
+    const userName = ref("");
+
+    onMounted(() => {
+      let user = SessionStorage.getItem("user");
+      console.log(user, typeof user);
+      userName.value = JSON.parse(user).name;
+    });
 
     return {
       router,
       essentialLinks: linksList,
       drawer: ref(false),
       miniState: ref(true),
+      userName,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
