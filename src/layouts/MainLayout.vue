@@ -9,9 +9,7 @@
             <q-list dense style="min-width: 100px">
               <q-item-label header>Usuário: {{ userName }}</q-item-label>
               <q-item clickable v-close-popup>
-                <q-item-section @click="router.push('/login')">
-                  Sair</q-item-section
-                >
+                <q-item-section @click="logOut()"> Sair</q-item-section>
                 <q-item-section avatar>
                   <q-icon color="primary" name="logout" />
                 </q-item-section>
@@ -60,11 +58,15 @@
   </q-layout>
 </template>
 
-<script>
+<script setup>
 import { defineComponent, onMounted, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
+import { useAuthStore } from "src/stores/auth-store";
+import { api } from "src/boot/axios";
+const auth = useAuthStore();
+const router = useRouter();
 
 const linksList = [
   {
@@ -83,34 +85,17 @@ const linksList = [
     route: "/cursos",
   },
 ];
+const logOut = async () => {
+  auth.singOut();
+  router.push("/login");
+};
+const drawer = ref(false);
+const miniState = ref(true);
+const essentialLinks = linksList;
+const userName = ref("");
 
-export default defineComponent({
-  name: "MainLayout",
-
-  components: { EssentialLink },
-
-  setup() {
-    const leftDrawerOpen = ref(false);
-    const router = useRouter();
-    const userName = ref("");
-
-    onMounted(() => {
-      let user = SessionStorage.getItem("user");
-      console.log(user, typeof user);
-      userName.value = JSON.parse(user).name;
-    });
-
-    return {
-      router,
-      essentialLinks: linksList,
-      drawer: ref(false),
-      miniState: ref(true),
-      userName,
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-    };
-  },
+onMounted(() => {
+  let user = SessionStorage.getItem("user");
+  userName.value = JSON.parse(user).name;
 });
 </script>
