@@ -22,12 +22,14 @@ const routes = [
         path: "",
         name: "home",
         component: () => import("pages/IndexPage.vue"),
+        meta: { requiresAuth: true },
       },
     ],
   },
   {
     path: "/alunos",
     component: () => import("layouts/MainLayout.vue"),
+    meta: { requiresAuth: true },
     children: [
       {
         path: "",
@@ -54,6 +56,7 @@ const routes = [
   {
     path: "/cursos",
     component: () => import("layouts/MainLayout.vue"),
+    meta: { requiresAuth: true },
     children: [
       {
         path: "",
