@@ -87,7 +87,7 @@ const linksList = [
 ];
 const logOut = async () => {
   auth.singOut();
-  router.push("/login");
+  router.replace("/login");
 };
 const drawer = ref(false);
 const miniState = ref(true);
