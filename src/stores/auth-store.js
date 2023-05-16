@@ -28,6 +28,11 @@ export const useAuthStore = defineStore("auth", () => {
   function singOut() {
     setToken(null);
     setUser(null);
+    sessionStorage.clear();
+  }
+
+  function isLoggedIn() {
+    return user.value;
   }
 
   return {
@@ -36,5 +41,6 @@ export const useAuthStore = defineStore("auth", () => {
     getToken,
     setBearerToken,
     singOut,
+    isLoggedIn,
   };
 });
