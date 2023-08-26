@@ -48,7 +48,7 @@ module.exports = configure(function (ctx) {
       env: {
         API: ctx.dev
           ? "http://localhost:3000/"
-          : "https://sgma-2dd8c8b9b838.herokuapp.com/",
+          : "https://sgma-32393584fcd6.herokuapp.com/",
       },
 
       // transpile: false,
