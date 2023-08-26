@@ -98,11 +98,7 @@ const editRoute = "/alunos/matriculas/editar";
 
 onMounted(() => {
   getRegistrations(route.params.id);
-  sessionStorage.studentId = route.params.id;
-});
-
-onUnmounted(() => {
-  sessionStorage.removeItem("studentId");
+  sessionStorage.setItem("studentId", route.params.id);
 });
 
 const getRegistrations = async (id) => {

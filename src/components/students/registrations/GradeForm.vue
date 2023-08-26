@@ -101,7 +101,7 @@ const router = useRouter();
 const route = useRoute();
 
 onMounted(async () => {
-  form.value.id_student = sessionStorage.studentId;
+  form.value.id_student = sessionStorage.getItem("studentId");
   if (route.params.id) {
     getRegisters(route.params.id);
     isCreate.value = false;
