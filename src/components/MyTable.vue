@@ -25,6 +25,7 @@
             rows-per-page-label="Quantidade por página"
             row-key="name"
             virtual-scroll
+            hide-no-data
           >
             <template v-slot:top-right>
               <q-input
